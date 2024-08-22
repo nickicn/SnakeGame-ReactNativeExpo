@@ -28,7 +28,7 @@ import { colors } from "../styles/theme"
     const [snake, setSnake] = useState(SNAKE_START);
     const [food, setFood] = useState(FOOD_START);
     const [isGameOver, setIsGameOver] = useState(false);
-    const [isGamePaused, setGamePaused] = useState(false);
+    const [isGamePaused, setIsGamePaused] = useState(false);
     const [score, setScore] = useState(0);
 
     const insets = useSafeAreaInsets();
@@ -137,14 +137,27 @@ import { colors } from "../styles/theme"
 
     return (
         <PanGestureHandler onGestureEvent={handleGesture}>
-         <SafeAreaView style={StyleSheet.container}>
-            <Header/>
+         <SafeAreaView style={styles.container}>
+            <Header
                 top={insets.top}
                 score={score}
                 paused={isGamePaused}
                 reload={() => setIsGameOver((prev) => !prev)}
-                pause={() => setGamePaused((prev) => !prev)}
+                pause={() => setIsGamePaused((prev) => !prev)}
+            />
+            <Board rows={ROWS} cols={COLS} top={insets.top} />
+            <Snake snake={snake} top={insets.top} />
+            { RandomFood }
          </SafeAreaView>
         </PanGestureHandler>
     )
 }
+
+const styles = StyleSheet.create({
+    container: {
+        backgroundColor: colors.p6,
+        flex: 1,
+    },
+})
+
+export default Game
